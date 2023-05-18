@@ -27,8 +27,9 @@ const crearNuevaLinea = (nombre,email) => {
   </tr>`
   linea.innerHTML = contenido;
   return linea
-  
-}
+};
+
+const table = document.querySelector("data-table")
 const http = new XMLHttpRequest();
 //console.log(http);
 
@@ -41,9 +42,17 @@ const http = new XMLHttpRequest();
 //DELETE - DELETE
 
 http.open("GET", "http://localhost:3000/perfil");
+
 http.send();
+
 http.onload = () => {
-    const data = http.response;
-    console.log(data)
-}
+  const data = JSON.parse(http.response);
+  console.log(data);
+  data.forEach((perfil) => {
+    const nuevaLinea = crearNuevaLinea(perfil.nombre, perfil.email);
+    table.appendChild(nuevaLinea);
+  });
+};
+
+
 
